@@ -6,6 +6,9 @@ import { generateElementsArr } from "./../../utils";
 import { bubbleSort } from "./../../Algorithms/BubbleSort/BubbleSort";
 import { insertionSort } from "./../../Algorithms/InsertionSort/InsertionSort";
 import { selectionSort } from "./../../Algorithms/SelectionSort/SelectionSort";
+import { mergeSort } from "./../../Algorithms/MergeSort/MergeSort";
+//@ts-ignore
+import { quickSort } from "./../../Algorithms/QuickSort/QuickSort";
 
 const SortingVisualizer = () => {
   const [elements, setElements] = useState([]);
@@ -77,6 +80,32 @@ const SortingVisualizer = () => {
     }
   };
 
+  const visualiseMergeSort = () => {
+    const animations = mergeSort(elements); // Use the mergeSort function
+    for (let i = 0; i < animations.length; i++) {
+      const barsArray = document.getElementsByClassName("bar");
+      const [b1, newHeight] = animations[i];
+      const b1Style = barsArray[b1].style;
+      setTimeout(() => {
+        b1Style.height = `${newHeight}%`;
+      }, i * (5 - speed));
+    }
+  };
+
+  const visualiseQuickSort = () => {
+    const animations = quickSort(elements); // Use the quickSort function
+    for (let i = 0; i < animations.length; i++) {
+      const barsArray = document.getElementsByClassName("bar");
+      const [b1, b2, b1newHeight, b2newHeight] = animations[i];
+      const b1Style = barsArray[b1].style;
+      const b2Style = barsArray[b2].style;
+      setTimeout(() => {
+        b1Style.height = `${b1newHeight}%`;
+        b2Style.height = `${b2newHeight}%`;
+      }, i * (5 - speed));
+    }
+  };
+
   return (
     <div>
       <nav className="navbar">
@@ -108,7 +137,7 @@ const SortingVisualizer = () => {
             className="nav-button"
             onClick={() => setElements(generateElementsArr(numberOfElements))}
           >
-            Generate New Set
+            Generate New Array
           </button>
         </div>
         <div className="button-group">
@@ -121,6 +150,14 @@ const SortingVisualizer = () => {
 
           <button className="btn" onClick={() => visualiseSelectionSort()}>
             Selection Sort
+          </button>
+
+          <button className="btn" onClick={() => visualiseMergeSort()}>
+            Merge Sort
+          </button>
+
+          <button className="btn" onClick={() => visualiseQuickSort()}>
+            Quick Sort
           </button>
         </div>
       </nav>
